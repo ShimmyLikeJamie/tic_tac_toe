@@ -20,18 +20,27 @@ const gameBoard = (function() {
     turn.innerHTML = playerOne.name
 
     //Initialize and capture tiles on board
-    const clearBoard = function() {
-        for (i=0; i < 9; i++) {
-        let id = parseInt(i + 1)
-        tile = document.getElementById(`${id}`)
-        tiles.push(tile)
-        tile.innerHTML = " ";
-        }
-        turn.innerHTML = playerOne.name
+    for (i=0; i < 9; i++) {
+    let id = parseInt(i + 1)
+    tile = document.getElementById(`${id}`)
+    tiles.push(tile)
+    tile.innerHTML = " ";
+    }
+    turn.innerHTML = playerOne.name
+    
+    //Create and attach function to change names button
+    names.onclick = function () {
+        playerOne.name = prompt('Enter a new name for player one')
+        playerTwo.name = prompt('Enter a new name for player two')
+
     }
 
-    //Attach function to clear button
-    clear.onclick = clearBoard()
+    //Attach clear function to clear button
+    clear.onclick = function() {
+        for (i = 0; i < tiles.length; i++) {
+            tiles[i].innerHTML = " "
+        }
+    }
 
     //Attach function to cells for taking turns
     cells = document.querySelectorAll('td')
@@ -84,12 +93,4 @@ const gameBoard = (function() {
         }
         return true
     }
-
-    //function for making players
-
-    return {
-        clearBoard: clearBoard
-    }
 })();
-
-gameBoard.clearBoard()

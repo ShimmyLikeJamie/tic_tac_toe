@@ -12,10 +12,6 @@ div {
     padding: 1px
 }
 
-#turn {
-    background-color: lightskyblue;
-}
-
 button {
     border: 1px solid black;
     width: 170px;
@@ -25,4 +21,12 @@ button {
 
 html {
     background-color: lightsteelblue;
+}
+
+#turn {
+    background-color: lightskyblue;
+}
+
+#win {
+    border: 0px
 }
