@@ -10,19 +10,20 @@ const gameBoard = (function() {
     turn = document.getElementById('turn')
 
     //function to create player
-    const createPlayer = function(name, turn){
+    const createPlayer = function(name, turn, piece){
         return {
             name: name,
-            turn: turn
+            turn: turn,
+            piece: piece
         }
     }
-    playerOne = createPlayer('Player One', true)
-    playerTwo = createPlayer('Player Two', false)
+    playerOne = createPlayer('Player One', true, 'x')
+    playerTwo = createPlayer('Player Two', false, 'o')
     turn.innerHTML = playerOne.name
 
     //Initialize and capture tiles on board
     for (i=0; i < 9; i++) {
-    let id = parseInt(i + 1)
+    let id = i + 1
     tile = document.getElementById(`${id}`)
     tiles.push(tile)
     tile.innerHTML = " ";
@@ -48,29 +49,27 @@ const gameBoard = (function() {
         cells[i].onclick = function() {
             if (this.innerHTML === ' ') {
                 if (playerOne.turn) {
-                    this.innerHTML = 'x'
-                    if (check_for_win('x')) {
+                    this.innerHTML = playerOne.piece
+                    if (check_for_win(playerOne.piece)) {
                         win.innerHTML = `${playerOne.name} wins!`
                     }
                     else if (check_for_draw()) {
                         win.innerHTML = 'It\'s a draw!'
                     }
                     turn.innerHTML = playerTwo.name
-                    playerOne.turn = false
-                    playerTwo.turn = true
                 }
                 else {
-                    this.innerHTML = 'o'
-                    if (check_for_win('o')) {
+                    this.innerHTML = playerTwo.piece
+                    if (check_for_win(playerTwo.piece)) {
                         win.innerHTML = `${playerTwo.name} wins!`
                     }
                     else if (check_for_draw()) {
                         win.innerHTML = 'It\'s a draw!'
                     }
                     turn.innerHTML = playerOne.name
-                    playerTwo.turn = false
-                    playerOne.turn = true
                 }
+                playerTwo.turn = !playerTwo.turn
+                playerOne.turn = !playerOne.turn
             }
         }
     }
