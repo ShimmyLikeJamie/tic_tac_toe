@@ -5,6 +5,11 @@ td {
     text-align: center;
 }
 
+body {
+    margin: auto;
+    width: 50%;
+}
+
 div {
     border: 1px solid black;
     width: 168px;

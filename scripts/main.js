@@ -10,13 +10,14 @@ const gameBoard = (function() {
     turn = document.getElementById('turn')
 
     //function to create player
-    const createPlayer = function(name){
+    const createPlayer = function(name, turn){
         return {
-            name: name
+            name: name,
+            turn: turn
         }
     }
-    playerOne = createPlayer('Player One')
-    playerTwo = createPlayer('Player Two')
+    playerOne = createPlayer('Player One', true)
+    playerTwo = createPlayer('Player Two', false)
     turn.innerHTML = playerOne.name
 
     //Initialize and capture tiles on board
@@ -26,13 +27,12 @@ const gameBoard = (function() {
     tiles.push(tile)
     tile.innerHTML = " ";
     }
-    turn.innerHTML = playerOne.name
     
     //Create and attach function to change names button
     names.onclick = function () {
-        playerOne.name = prompt('Enter a new name for player one')
-        playerTwo.name = prompt('Enter a new name for player two')
-
+        playerOne.name = prompt('Enter a new name for player one');
+        playerTwo.name = prompt('Enter a new name for player two');
+        (playerOne.turn === true) ? turn.innerHTML = playerOne.name : turn.innerHTML = playerTwo.name
     }
 
     //Attach clear function to clear button
@@ -47,7 +47,7 @@ const gameBoard = (function() {
     for (i = 0; i < cells.length; i++){
         cells[i].onclick = function() {
             if (this.innerHTML === ' ') {
-                if (turn.innerHTML == playerOne.name) {
+                if (playerOne.turn) {
                     this.innerHTML = 'x'
                     if (check_for_win('x')) {
                         win.innerHTML = `${playerOne.name} wins!`
@@ -56,6 +56,8 @@ const gameBoard = (function() {
                         win.innerHTML = 'It\'s a draw!'
                     }
                     turn.innerHTML = playerTwo.name
+                    playerOne.turn = false
+                    playerTwo.turn = true
                 }
                 else {
                     this.innerHTML = 'o'
@@ -66,6 +68,8 @@ const gameBoard = (function() {
                         win.innerHTML = 'It\'s a draw!'
                     }
                     turn.innerHTML = playerOne.name
+                    playerTwo.turn = false
+                    playerOne.turn = true
                 }
             }
         }
